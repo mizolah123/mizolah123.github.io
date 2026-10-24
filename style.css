@@ -39,3 +39,39 @@ section.linux-section{padding:35px 0 65px;display:grid;grid-template-columns:1fr
 @media(max-width:800px){section.linux-section{grid-template-columns:1fr;gap:25px;padding:10px 0 45px}.linux-intro>p:not(.eyebrow){max-width:100%}.linux-intro h2{font-size:32px}}
 @media(max-width:540px){.linux-bar{gap:8px;padding:10px}.linux-output{padding:15px;height:220px;font-size:11px}.linux-prompt{padding:10px;gap:6px}.linux-prompt label{font-size:9px}.linux-bar button{font-size:9px}.linux-intro .eyebrow{margin-bottom:14px}}
 @media(prefers-reduced-motion:reduce){.terminal-typing:after{animation:none}}
+
+/* Crochets glitch : impulsions décalées vers l’extérieur du portrait. */
+.portrait-bracket{
+  --glitch-x:-4px;--glitch-y:-3px;
+  animation:portrait-bracket-glitch 5.2s steps(1,end) infinite;
+}
+.bracket-tr{--glitch-x:4px;--glitch-y:-3px;animation-delay:-1.3s}
+.bracket-bl{--glitch-x:-4px;--glitch-y:3px;animation-delay:-3.4s}
+.bracket-br{--glitch-x:4px;--glitch-y:3px;animation-delay:-2.1s}
+.portrait-bracket:before,.portrait-bracket:after{
+  content:'';position:absolute;inset:0;
+  border-style:solid;border-width:inherit;border-color:#ff5963;
+  box-sizing:border-box;pointer-events:none;opacity:0;
+  animation:portrait-bracket-echo 5.2s steps(1,end) infinite;
+  animation-delay:inherit;
+}
+.portrait-bracket:before{clip-path:inset(0 0 48% 0)}
+.portrait-bracket:after{border-color:#920d1b;clip-path:inset(48% 0 0 0)}
+@keyframes portrait-bracket-glitch{
+  0%,14%,21%,61%,69%,100%{transform:translate(0,0);opacity:1}
+  15%{transform:translate(var(--glitch-x),0);opacity:.85}
+  17%{transform:translate(0,var(--glitch-y));opacity:1}
+  19%{transform:translate(var(--glitch-x),var(--glitch-y));opacity:.9}
+  62%{transform:translate(var(--glitch-x),var(--glitch-y));opacity:1}
+  65%{transform:translate(var(--glitch-x),0);opacity:.8}
+  67%{transform:translate(0,var(--glitch-y));opacity:1}
+}
+@keyframes portrait-bracket-echo{
+  0%,14%,21%,61%,69%,100%{opacity:0;transform:translate(0,0)}
+  15%,19%,62%,67%{opacity:.6;transform:translate(var(--glitch-x),var(--glitch-y))}
+  17%,65%{opacity:.3;transform:translate(var(--glitch-x),0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .portrait-bracket,.portrait-bracket:before,.portrait-bracket:after{animation:none;transform:none}
+  .portrait-bracket:before,.portrait-bracket:after{display:none}
+}
