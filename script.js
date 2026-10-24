@@ -4,7 +4,7 @@ const themeButton = document.querySelector('.theme');
 function setTheme(theme) {
   root.dataset.theme = theme;
   themeButton.setAttribute('aria-label', theme === 'light' ? 'Activer le thème sombre' : 'Activer le thème clair');
-  document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f5f5ed' : '#101715';
+  document.querySelector('meta[name="theme-color"]').content = theme === 'light' ? '#f7f5f5' : '#09090b';
 }
 try { setTheme(localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark'); } catch { setTheme('dark'); }
 themeButton.addEventListener('click', () => {
@@ -30,3 +30,4 @@ document.querySelector('#copy-email').addEventListener('click', async () => {
   }
 });
 document.querySelector('#year').textContent = new Date().getFullYear();
+
