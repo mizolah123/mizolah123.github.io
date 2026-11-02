@@ -64,11 +64,13 @@
     const link = event.target.closest && event.target.closest('a[href]');
     if (!link) return;
     const url = new URL(link.href, location.href);
-    if (!url.pathname.endsWith('/assets/CV_Hamza_Lahbal.pdf')) return;
+    if (!/\/assets\/CV_Hamza_Lahbal(?:_EN)?\.pdf$/.test(url.pathname)) return;
+    const fileName = url.pathname.split('/').pop();
     // Événement distinct de file_download, éventuellement généré automatiquement par GA4.
     window.gtag('event', 'cv_download', {
       send_to: ID,
-      file_name: 'CV_Hamza_Lahbal.pdf',
+      file_name: fileName,
+      cv_language: fileName.endsWith('_EN.pdf') ? 'en' : 'fr',
       file_extension: 'pdf',
       link_url: url.href,
       transport_type: 'beacon'
@@ -76,3 +78,4 @@
     // Aucun preventDefault : le téléchargement fonctionne même si Analytics est bloqué.
   });
 })();
+
